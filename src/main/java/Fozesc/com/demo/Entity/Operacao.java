@@ -1,8 +1,6 @@
 package Fozesc.com.demo.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
@@ -14,14 +12,18 @@ import java.time.LocalDateTime;
 @Audited
 @AuditTable(value = "operacaoAudited",schema = "audited")
 @Table(name = "operacao",schema = "public")
-public class Operacao {
+public class Operacao extends AbstractEntity {
+
     @Getter
     @Setter
-    @Column(name = "aprovacao",nullable = false)
-    private Aprovacao aprovacao;
+    @OneToOne
+    @JoinColumn(name = "aprovacao",nullable = false)
+    private AprovacaoStatus status;
+
     @Getter
     @Setter
-    @Column(name = "pedido",nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido",nullable = false)
     private Pedido pedido;
     @Getter
     @Setter
@@ -29,7 +31,8 @@ public class Operacao {
     private String emitente;
     @Getter
     @Setter
-    @Column(name = "dtPgto",nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emprestimo",nullable = false)
     private Emprestimo emprestimo;
     @Getter
     @Setter
@@ -43,6 +46,10 @@ public class Operacao {
     @Setter
     @Column(name = "vencimento",nullable = false)
     private LocalDateTime vencimento;
+    @Getter
+    @Setter
+    @Column(name = "situacao",nullable = false)
+    private Situacao situacao;
     @Getter
     @Setter
     @Column(name = "observacao",nullable = false,length = 100)

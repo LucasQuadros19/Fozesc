@@ -17,13 +17,10 @@ public abstract class AbstractEntity {
     @Column(name = "ativo",nullable = false)
     private  boolean ativo;
     @Getter@Setter
-    @Column(name = "permissao",nullable = false)
-    private boolean permissao;
-    @Getter@Setter
-    @Column(name = "permissao",nullable = false)
+    @Column(name = "cadastro",nullable = false)
     private LocalDateTime cadastro;
     @Getter@Setter
-    @Column(name = "permissao")
+    @Column(name = "edicao")
     private LocalDateTime edicao;
     @PrePersist
     private void prePersist(){

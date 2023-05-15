@@ -8,7 +8,7 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 @Entity
 @Audited
-@AuditTable(value = "pessoaAudited", schema = "udited")
+@AuditTable(value = "pessoaAudited", schema = "audited")
 @Table(name = "pessoas",schema = "public")
 public class Pessoa extends AbstractEntity {
     @Getter
@@ -27,5 +27,8 @@ public class Pessoa extends AbstractEntity {
     @Setter
     @Column(name = "nDoc",nullable = false,length = 10)
     private String nDoc;
+    @Getter@Setter
+    @Column(name= "permissao", nullable = false)
+    private boolean permissao;
 
 }
