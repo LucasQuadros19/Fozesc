@@ -52,6 +52,6 @@ public class Operacao extends AbstractEntity {
     private Situacao situacao;
     @Getter
     @Setter
-    @Column(name = "observacao",nullable = false,length = 100)
+    @Column(name = "observacao",length = 100)
     private String observacao;
 }
