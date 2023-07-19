@@ -22,7 +22,7 @@ public class Operacao extends AbstractEntity {
 
     @Getter
     @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "pedido",nullable = false)
     private Pedido pedido;
     @Getter
@@ -31,7 +31,7 @@ public class Operacao extends AbstractEntity {
     private String emitente;
     @Getter
     @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "emprestimo",nullable = false)
     private Emprestimo emprestimo;
     @Getter
@@ -40,7 +40,7 @@ public class Operacao extends AbstractEntity {
     private  LocalDateTime dtPgto;
     @Getter
     @Setter
-    @Column(name = "destino",nullable = false)
+    @Column(name = "destino",nullable = false,length = 100)
     private Destino destino;
     @Getter
     @Setter
@@ -48,7 +48,7 @@ public class Operacao extends AbstractEntity {
     private LocalDateTime vencimento;
     @Getter
     @Setter
-    @Column(name = "situacao",nullable = false)
+    @Column(name = "situacao",nullable = false,length = 100)
     private Situacao situacao;
     @Getter
     @Setter

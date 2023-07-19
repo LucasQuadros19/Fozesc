@@ -21,9 +21,10 @@ public class PessoaService {
     public Pessoa cadastrar(Pessoa cadastrar) {
         Assert.notNull(cadastrar.getNome(), "Error, campo nome vazio");
         Assert.notNull(cadastrar.getCpfCnpj(), "Error, campo cpf/cnpj vazio");
-        Assert.notNull(cadastrar.getNDoc(), "Error, campo nDoc vazio");
+    //    Assert.notNull(cadastrar.getNDocumento(), "Error, campo doc vazio");
         return this.Repository.save(cadastrar);
     }
+
     @Transactional(rollbackFor = Exception.class)
     public void atualizar(Long id, Pessoa atualizar) {
         final Pessoa marcaBanco = this.Repository.findById(atualizar.getId()).orElse(null);

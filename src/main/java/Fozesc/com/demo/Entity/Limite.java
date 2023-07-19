@@ -13,7 +13,7 @@ import org.hibernate.envers.Audited;
 public class Limite extends AbstractEntity {
     @Getter
     @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "cliente",nullable = false)
     private Pessoa cliente;
     @Getter

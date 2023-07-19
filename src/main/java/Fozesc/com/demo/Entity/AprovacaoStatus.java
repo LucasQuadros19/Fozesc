@@ -12,7 +12,7 @@ import org.hibernate.envers.Audited;
 public class AprovacaoStatus extends AbstractEntity {
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "limite",nullable = false)
     private Limite limite;
     @Getter
@@ -25,7 +25,7 @@ public class AprovacaoStatus extends AbstractEntity {
     private boolean aprovacao;
     @Getter
     @Setter
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false,length = 30)
     private Status status;
 }
 

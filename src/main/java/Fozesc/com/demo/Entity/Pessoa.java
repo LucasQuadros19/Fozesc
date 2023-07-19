@@ -21,12 +21,12 @@ public class Pessoa extends AbstractEntity {
     private String cpfCnpj;
     @Getter
     @Setter
-    @Column(name = "banco",nullable = false,length = 20)
-    private Bancos banco;
+    @Column(name = "numero_Doc",nullable = false,length = 30)
+    private String numeroDoc;
     @Getter
     @Setter
-    @Column(name = "nDoc",nullable = false,length = 10)
-    private String nDoc;
+    @Column(name = "banco",nullable = false,length = 20)
+    private Bancos banco;
     @Getter@Setter
     @Column(name= "permissao", nullable = false)
     private boolean permissao;
