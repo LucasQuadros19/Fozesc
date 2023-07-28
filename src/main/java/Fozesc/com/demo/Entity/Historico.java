@@ -14,13 +14,9 @@ import org.hibernate.envers.Audited;
 public class Historico extends AbstractEntity{
     @Getter
     @Setter
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cliente",nullable = false)
-    private Pessoa cliente;
-    @Getter
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "emprestimo",nullable = false)
-     private Emprestimo emprestimo;
+    private Operacao operacao;
+
 
 }

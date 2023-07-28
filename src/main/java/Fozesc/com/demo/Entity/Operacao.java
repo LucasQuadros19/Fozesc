@@ -1,5 +1,6 @@
 package Fozesc.com.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,6 +46,7 @@ public class Operacao extends AbstractEntity {
     @Getter
     @Setter
     @Column(name = "vencimento",nullable = false)
+    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDateTime vencimento;
     @Getter
     @Setter

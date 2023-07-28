@@ -1,5 +1,6 @@
 package Fozesc.com.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +19,11 @@ public abstract class AbstractEntity {
     private  boolean ativo;
     @Getter@Setter
     @Column(name = "cadastro",nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime cadastro;
     @Getter@Setter
     @Column(name = "edicao")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime edicao;
     @PrePersist
     private void prePersist(){
