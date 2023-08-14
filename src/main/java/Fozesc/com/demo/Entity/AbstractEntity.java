@@ -19,11 +19,11 @@ public abstract class AbstractEntity {
     private  boolean ativo;
     @Getter@Setter
     @Column(name = "cadastro",nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+
     private LocalDateTime cadastro;
     @Getter@Setter
     @Column(name = "edicao")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+
     private LocalDateTime edicao;
     @PrePersist
     private void prePersist(){

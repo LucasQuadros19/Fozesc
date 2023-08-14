@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Audited
@@ -15,8 +17,12 @@ public class Historico extends AbstractEntity{
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "cliente",nullable = false)
+    @JoinColumn(name = "operacao",nullable = false)
     private Operacao operacao;
+    @Getter
+    @Setter
+    @Column(name = "proxPgamaneto",nullable = false)
+    private LocalDateTime proxPgamaneto;
 
 
 }

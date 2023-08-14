@@ -1,9 +1,12 @@
 package Fozesc.com.demo.Service;
 
+import Fozesc.com.demo.Entity.Emprestimo;
 import Fozesc.com.demo.Entity.Limite;
 import Fozesc.com.demo.Entity.Operacao;
+import Fozesc.com.demo.Repository.EmprestimoRepository;
 import Fozesc.com.demo.Repository.LimiteRepository;
 import Fozesc.com.demo.Repository.OperacaoRepository;
+import Fozesc.com.demo.Repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,10 @@ public class OperacaoService {
 
     @Autowired
     private OperacaoRepository Repository;
+    @Autowired
+    private PedidoRepository  pRepository;
+    @Autowired
+    private EmprestimoRepository eRepository;
     public List<Operacao> listartudo(){
 
         return Repository.findAll();
@@ -32,4 +39,9 @@ public class OperacaoService {
         Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
         this.Repository.save(atualizar);
     }
+    @Transactional(rollbackFor = Exception.class)
+    public void taxas(final Long id){
+
+    }
+
 }

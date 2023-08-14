@@ -1,8 +1,6 @@
 package Fozesc.com.demo.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
@@ -17,10 +15,16 @@ public class Emprestimo extends AbstractEntity {
     @Setter
     @Column(name = "valor",nullable = false)
     private double valor;
+
     @Getter
     @Setter
     @Column(name = "quantidade",nullable = false)
     private int quantidade;
+    @Getter
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "cliente",nullable = false)
+    private AprovacaoStatus Aprovacao;
     @Getter
     @Setter
     @Column(name = "formaPaga",nullable = false)

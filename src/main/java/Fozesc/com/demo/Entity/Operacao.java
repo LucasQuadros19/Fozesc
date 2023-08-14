@@ -15,17 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "operacao",schema = "public")
 public class Operacao extends AbstractEntity {
 
-    @Getter
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "aprovacao",nullable = false)
-    private AprovacaoStatus status;
 
-    @Getter
-    @Setter
-    @OneToOne
-    @JoinColumn(name = "pedido",nullable = false)
-    private Pedido pedido;
     @Getter
     @Setter
     @Column(name = "emitente",nullable = false,length = 30)
@@ -37,16 +27,11 @@ public class Operacao extends AbstractEntity {
     private Emprestimo emprestimo;
     @Getter
     @Setter
-    @Column(name = "dtPgto",nullable = false)
-    private  LocalDateTime dtPgto;
-    @Getter
-    @Setter
     @Column(name = "destino",nullable = false,length = 100)
     private Destino destino;
     @Getter
     @Setter
     @Column(name = "vencimento",nullable = false)
-    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDateTime vencimento;
     @Getter
     @Setter

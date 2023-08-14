@@ -1,9 +1,6 @@
 package Fozesc.com.demo.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
@@ -18,6 +15,11 @@ public class Pedido extends AbstractEntity{
     @Setter
     @JoinColumn(name = "formaPaga",nullable = false)
     private Forma formaPaga;
+    @Getter
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "cliente",nullable = false)
+    private Pessoa cliente;
     @Getter
     @Setter
     @Column(name = "valorDoc",nullable = false)

@@ -17,6 +17,11 @@ public class AprovacaoStatus extends AbstractEntity {
     private Limite limite;
     @Getter
     @Setter
+    @OneToOne
+    @JoinColumn(name = "cliente",nullable = false)
+    private Pedido pedido;
+    @Getter
+    @Setter
     @Column(name = "indicacao", nullable = false, length = 30)
     private String indicacao;
     @Getter

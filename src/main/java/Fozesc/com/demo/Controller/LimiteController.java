@@ -42,7 +42,6 @@ public class LimiteController {
         List<Limite> listarAtivo = Repository.findByAtivo(ativo);
         return ResponseEntity.ok(listarAtivo);
     }
-
     @PostMapping("/cadastrar")
     public ResponseEntity<?> cadastrar(@RequestBody Limite cadastro){
         try{

@@ -1,5 +1,6 @@
 package Fozesc.com.demo.Controller;
 
+import Fozesc.com.demo.Entity.Historico;
 import Fozesc.com.demo.Entity.Limite;
 import Fozesc.com.demo.Entity.Operacao;
 import Fozesc.com.demo.Repository.LimiteRepository;
@@ -40,6 +41,13 @@ public class OperacaoController {
         List<Operacao> listarAtivo = Repository.findByAtivo(ativo);
         return ResponseEntity.ok(listarAtivo);
     }
+   /* @GetMapping("/lista/cliente/{id}")
+    public ResponseEntity<List<Operacao>> parcelas(@PathVariable(value = "id") Long clienteId){
+        List<Operacao> listarParcela = Repository.findByClienteId(clienteId);
+        return ResponseEntity.ok(listarParcela);
+    }
+
+    */
 
     @PostMapping("/cadastrar")
     public ResponseEntity<?> cadastrar(@RequestBody Operacao cadastro){
