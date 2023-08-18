@@ -1,8 +1,6 @@
 package Fozesc.com.demo.Service;
 
-import Fozesc.com.demo.Entity.Emprestimo;
 import Fozesc.com.demo.Entity.Historico;
-import Fozesc.com.demo.Repository.EmprestimoRepository;
 import Fozesc.com.demo.Repository.HistoricoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

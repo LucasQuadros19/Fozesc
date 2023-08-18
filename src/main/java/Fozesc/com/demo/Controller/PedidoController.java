@@ -1,15 +1,14 @@
 package Fozesc.com.demo.Controller;
 
-import Fozesc.com.demo.Entity.Operacao;
+import Fozesc.com.demo.Entity.Limite;
 import Fozesc.com.demo.Entity.Pedido;
-import Fozesc.com.demo.Repository.OperacaoRepository;
 import Fozesc.com.demo.Repository.PedidoRepository;
-import Fozesc.com.demo.Service.OperacaoService;
 import Fozesc.com.demo.Service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +40,62 @@ public class PedidoController {
         return ResponseEntity.ok(listarAtivo);
     }
 
+    @PostMapping("/cadastrar/simples")
+    public ResponseEntity<?> cadastrarSimples(@RequestBody Pedido cadastro) {
+        try {
+            Pedido pedidoComJuros = Service.pedidoMensalSimples(cadastro);
+            return ResponseEntity.ok("Cadastro feito com sucesso. Valor total: " + pedidoComJuros.getTotal()+
+                                            "Valor da parcela="+pedidoComJuros.getValorLiquido());
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        }
+    }
+    @PostMapping("/cadastrar/composto")
+    public ResponseEntity<?> cadastrarComposto(@RequestBody Pedido cadastro) {
+        try {
+            Pedido pedidoComJuros = Service.pedidoMensalComposto(cadastro);
+            return ResponseEntity.ok("Cadastro feito com sucesso. Valor total: " + pedidoComJuros.getTotal()+
+                    "Valor da parcela="+pedidoComJuros.getValorLiquido());
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        }
+    }
+    @PostMapping("/cadastrar/diario")
+    public ResponseEntity<?> cadastrarDiario(@RequestBody Pedido cadastro) {
+        try {
+            Pedido pedidoComJuros = Service.pedidodiarioSimples(cadastro);
+            return ResponseEntity.ok("Cadastro feito com sucesso. Valor total: " + pedidoComJuros.getTotal()+
+                                            " Valor="+pedidoComJuros.getValorLiquido()+" periodo de ="+pedidoComJuros.getQuantidade());
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        }
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public Pedido calculoMensal(Pedido pedido) {
+        Double valorInicial = pedido.getValorDoc(); // Obtém o valor inicial do pedido
+        Integer jurosInt = pedido.getJuros().intValue(); // Obtém o valor dos juros do pedido como um número inteiro
+        Integer quantidade = pedido.getQuantidade(); // Obtém a quantidade do pedido
+        Double jurosDecimal = jurosInt / 100.0;
+        Double resultadoDivisao = valorInicial / quantidade;
+        Double valorLiquido = resultadoDivisao + (resultadoDivisao * jurosDecimal);
+
+        pedido.setValorLiquido(valorLiquido);
+        pedido.setTotal(valorLiquido); // Neste exemplo, o total foi considerado o mesmo que o valor líquido
+
+        return Repository.save(pedido); // Salva o pedido com os valores atualizados e retorna o pedido criado
+    }
     @PostMapping("/cadastrar")
     public ResponseEntity<?> cadastrar(@RequestBody Pedido cadastro){
         try{

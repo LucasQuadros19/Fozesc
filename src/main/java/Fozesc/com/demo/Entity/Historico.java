@@ -17,8 +17,8 @@ public class Historico extends AbstractEntity{
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "operacao",nullable = false)
-    private Operacao operacao;
+    @JoinColumn(name = "pedido",nullable = false)
+    private Pedido pedido;
     @Getter
     @Setter
     @Column(name = "proxPgamaneto",nullable = false)

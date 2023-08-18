@@ -1,7 +1,5 @@
 package Fozesc.com.demo.Controller;
 import Fozesc.com.demo.Entity.Historico;
-import Fozesc.com.demo.Entity.Limite;
-import Fozesc.com.demo.Entity.Operacao;
 import Fozesc.com.demo.Repository.HistoricoRepository;
 import Fozesc.com.demo.Service.HistoricoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +25,7 @@ public class HistoricoController {
         List<Historico> listartudo = Service.listartudo();
         return ResponseEntity.ok(listartudo);
     }
-    @GetMapping("/lista/Parcela/{id}")
-    public ResponseEntity<List<Historico>> parcelas(@PathVariable(value = "id") Operacao operacao){
-        List<Historico> listarParcela = Repository.findByOperacao(operacao);
-        return ResponseEntity.ok(listarParcela);
-    }
+
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id){
         Historico listarid = Repository.findById(id).orElse(null);

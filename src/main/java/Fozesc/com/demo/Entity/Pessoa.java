@@ -1,11 +1,13 @@
 package Fozesc.com.demo.Entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+
+import java.util.List;
+
 @Entity
 @Audited
 @AuditTable(value = "pessoaAudited", schema = "audited")
@@ -30,5 +32,9 @@ public class Pessoa extends AbstractEntity {
     @Getter@Setter
     @Column(name= "permissao", nullable = false)
     private boolean permissao;
+
+
+
+
 
 }

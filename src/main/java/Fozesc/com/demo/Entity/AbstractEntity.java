@@ -19,7 +19,6 @@ public abstract class AbstractEntity {
     private  boolean ativo;
     @Getter@Setter
     @Column(name = "cadastro",nullable = false)
-
     private LocalDateTime cadastro;
     @Getter@Setter
     @Column(name = "edicao")
