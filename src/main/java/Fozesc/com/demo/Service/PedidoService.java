@@ -22,6 +22,8 @@ public class PedidoService {
     }
     @Transactional(rollbackFor = Exception.class)
     public Pedido cadastrar(Pedido cadastrar) {
+        Assert.notNull(cadastrar.getQuantidade(), "Error, campo quantidade vazio");
+        Assert.notNull(cadastrar.getJuros(), "Error, campo juros vazio");
         return this.Repository.save(cadastrar);
     }
     @Transactional(rollbackFor = Exception.class)

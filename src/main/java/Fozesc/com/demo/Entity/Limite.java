@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Audited
 @AuditTable(value = "limiteAudited",schema = "audited")
@@ -28,4 +30,9 @@ public class Limite extends AbstractEntity {
     @Setter
     @Column(name = "aprovacao", nullable = false)
     private Boolean aprovacao;
+
+    @PrePersist
+    private void prePersist(){
+        this.aprovacao = true;
+    }
 }

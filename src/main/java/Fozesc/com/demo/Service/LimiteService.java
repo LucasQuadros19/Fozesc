@@ -20,6 +20,8 @@ public class LimiteService {
     }
     @Transactional(rollbackFor = Exception.class)
     public Limite cadastrar(Limite cadastrar) {
+        Assert.notNull(cadastrar.getLimite(), "Error, campo limite vazio");
+        Assert.notNull(cadastrar.getTaxa(), "Error, campo taxa vazio");
         return this.Repository.save(cadastrar);
     }
     @Transactional(rollbackFor = Exception.class)

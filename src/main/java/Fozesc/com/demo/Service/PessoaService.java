@@ -20,8 +20,10 @@ public class PessoaService {
     @Transactional(rollbackFor = Exception.class)
     public Pessoa cadastrar(Pessoa cadastrar) {
         Assert.notNull(cadastrar.getNome(), "Error, campo nome vazio");
-        Assert.notNull(cadastrar.getCpfCnpj(), "Error, campo cpf/cnpj vazio");
-    //    Assert.notNull(cadastrar.getNDocumento(), "Error, campo doc vazio");
+        Assert.notNull(cadastrar.getBanco(), "Error, campo banco vazio");
+        Assert.notNull(cadastrar.getNumeroDoc(), "Error, campo numeroDoc vazio");
+        String regexCpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
+        Assert.isTrue(cadastrar.getCpfCnpj().matches(regexCpf), "Error cpf com mascara errada");
         return this.Repository.save(cadastrar);
     }
 
