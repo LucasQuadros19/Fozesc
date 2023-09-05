@@ -33,6 +33,11 @@ public class PedidoService {
         Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
         this.Repository.save(atualizar);
     }
+
+
+
+
+    // adicionar limite
     @Transactional(rollbackFor = Exception.class)
     public Pedido pedidoMensalSimples(Pedido pedido) {
         Double valorInicial = pedido.getValorDoc();
@@ -57,15 +62,14 @@ public class PedidoService {
             Double valorJuros = resultado * jurosDecimal;
             resultado+=valorJuros;
             System.out.print(resultado+"\n");
-
-
+        }
+        for(int i=0;i<pedido.getParcelas().size();i++){
+            pedido.getParcelas().get(i).setPedido(pedido);
         }
         Double parcela = resultado/quantidade ;
         pedido.setValorLiquido(parcela);
         pedido.setTotal(resultado);
         return Repository.save(pedido);
-
-
     }
     @Transactional(rollbackFor = Exception.class)
     public Pedido pedidodiarioSimples(Pedido pedido) {

@@ -1,6 +1,4 @@
 package Fozesc.com.demo.Service;
-
-import Fozesc.com.demo.Entity.Pedido;
 import Fozesc.com.demo.Entity.Pessoa;
 import Fozesc.com.demo.Repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,9 @@ public class PessoaService {
         Assert.notNull(cadastrar.getNumeroDoc(), "Error, campo numeroDoc vazio");
         String regexCpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
         Assert.isTrue(cadastrar.getCpfCnpj().matches(regexCpf), "Error cpf com mascara errada");
+
+        int count = this.Repository.countByNome(cadastrar.getNome());
+        Assert.isTrue(count == 0, "Erro: A pessoa já existe");
         return this.Repository.save(cadastrar);
     }
 

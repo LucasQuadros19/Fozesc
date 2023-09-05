@@ -1,15 +1,15 @@
 package Fozesc.com.demo.Controller;
-
-import Fozesc.com.demo.Entity.Limite;
 import Fozesc.com.demo.Entity.Pedido;
 import Fozesc.com.demo.Repository.PedidoRepository;
 import Fozesc.com.demo.Service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +19,7 @@ import java.util.Optional;
 public class PedidoController {
     @Autowired
     private PedidoRepository Repository;
+
     @Autowired
     private PedidoService Service;
 
@@ -39,6 +40,16 @@ public class PedidoController {
         List<Pedido> listarAtivo = Repository.findByAtivo(ativo);
         return ResponseEntity.ok(listarAtivo);
     }
+    @GetMapping("/lista/cliente/{id}")
+    public ResponseEntity<?> listacliente(@PathVariable(value = "id") Long id){
+        List<Pedido> pedidosDoCliente = Repository.findByClienteId(id);
+
+        if (!pedidosDoCliente.isEmpty()) {
+            return ResponseEntity.ok(pedidosDoCliente);
+        } else {
+            return ResponseEntity.badRequest().body("Nenhum pedido encontrado para o cliente.");
+        }
+    }
 
     @PostMapping("/cadastrar/simples")
     public ResponseEntity<?> cadastrarSimples(@RequestBody Pedido cadastro) {
@@ -55,17 +66,17 @@ public class PedidoController {
         }
     }
     @PostMapping("/cadastrar/composto")
-    public ResponseEntity<?> cadastrarComposto(@RequestBody Pedido cadastro) {
+    public ResponseEntity<Pedido> cadastrarComposto(@RequestBody Pedido cadastro) {
         try {
             Pedido pedidoComJuros = Service.pedidoMensalComposto(cadastro);
-            return ResponseEntity.ok("Cadastro feito com sucesso. Valor total: " + pedidoComJuros.getTotal()+
-                    "Valor da parcela="+pedidoComJuros.getValorLiquido());
+            return ResponseEntity.ok(pedidoComJuros);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+         //   return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
     @PostMapping("/cadastrar/diario")

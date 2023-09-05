@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido,Long> {
     List<Pedido> findByAtivo(boolean ativo);
+    List<Pedido> findByClienteId(Long clienteId);
+
 }

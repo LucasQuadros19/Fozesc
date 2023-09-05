@@ -16,6 +16,12 @@ import java.util.List;
 @AuditTable(value = "pedidoAudited", schema = "audited")
 @Table(name = "pedido",schema = "public")
 public class Pedido extends AbstractEntity{
+
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "cliente",nullable = false)
+    private Pessoa cliente;
     @Getter
     @Setter
     @JoinColumn(name = "formaPaga",nullable = false)
@@ -55,7 +61,7 @@ public class Pedido extends AbstractEntity{
     private LocalDateTime criacao;
     @Getter
     @Setter
-    @Column(name = "vencimento",nullable = false)
+    @Column(name = "vencimento")
     private LocalDateTime vencimento;
     @Getter
     @Setter
@@ -67,13 +73,17 @@ public class Pedido extends AbstractEntity{
     private String observacao;
     @Getter
     @Setter
-    @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnoreProperties("pedido")
     private List<Historico> parcelas;
+    @Getter
+    @Setter
+    @Column(name = "aprovacao", nullable = false)
+    private Boolean aprovacao;
     @PrePersist
     private void prePersiste(){
         setCadastro(LocalDateTime.now());
         this.setCriacao(LocalDateTime.now());
-
+        this.aprovacao = true;
     }
 }

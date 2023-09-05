@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -33,8 +34,9 @@ public class Pessoa extends AbstractEntity {
     @Column(name= "permissao", nullable = false)
     private boolean permissao;
 
-
-
-
+    @Getter
+    @Setter
+    @Column(name= "limite",nullable = false)
+    private Double limite;
 
 }

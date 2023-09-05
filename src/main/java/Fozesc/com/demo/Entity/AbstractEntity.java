@@ -18,7 +18,7 @@ public abstract class AbstractEntity {
     @Column(name = "ativo",nullable = false)
     private  boolean ativo;
     @Getter@Setter
-    @Column(name = "cadastro",nullable = false)
+    @Column(name = "cadastro")
     private LocalDateTime cadastro;
     @Getter@Setter
     @Column(name = "edicao")
@@ -31,6 +31,7 @@ public abstract class AbstractEntity {
     }
     @PreUpdate
     private void preUpdate(){
+
         this.edicao = LocalDateTime.now();
     }
 }
