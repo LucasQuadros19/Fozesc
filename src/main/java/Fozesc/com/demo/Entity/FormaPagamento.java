@@ -7,14 +7,12 @@ import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
-import java.security.PrivateKey;
-
 @Entity
 @Audited
-@AuditTable(value = "situacaoudited", schema = "audited")
-@Table(name = "situacao",schema = "public")
+@AuditTable(value = "FormaPagamentoaudited", schema = "audited")
+@Table(name = "formaPagamento",schema = "public")
 @Getter
 @Setter
-public class Situacao extends AbstractEntity {
-    private String situacao;
+public class FormaPagamento extends AbstractEntity{
+    private String formaPagamento;
 }

@@ -84,6 +84,9 @@ public class PedidoService {
         Double jurosTotal = jurosDiario * diferencaDias;
         Double parcela = valorInicial * jurosTotal;
         Double total = valorInicial - parcela;
+        for(int i=0;i<pedido.getParcelas().size();i++){
+            pedido.getParcelas().get(i).setPedido(pedido);
+        }
         pedido.setValorLiquido(parcela);
         pedido.setTotal(total);
         pedido.setQuantidade((int) diferencaDias);

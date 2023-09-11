@@ -1,6 +1,5 @@
 package Fozesc.com.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -66,7 +65,7 @@ public class Pedido extends AbstractEntity{
     @Getter
     @Setter
     @Column(name = "situacao",nullable = false,length = 100)
-    private Situacao situacao;
+    private Situacaos situacao;
     @Getter
     @Setter
     @Column(name = "observacao",length = 100)

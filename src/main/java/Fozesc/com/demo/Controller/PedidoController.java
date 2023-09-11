@@ -52,17 +52,16 @@ public class PedidoController {
     }
 
     @PostMapping("/cadastrar/simples")
-    public ResponseEntity<?> cadastrarSimples(@RequestBody Pedido cadastro) {
+    public ResponseEntity<Pedido> cadastrarSimples(@RequestBody Pedido cadastro) {
         try {
             Pedido pedidoComJuros = Service.pedidoMensalSimples(cadastro);
-            return ResponseEntity.ok("Cadastro feito com sucesso. Valor total: " + pedidoComJuros.getTotal()+
-                                            "Valor da parcela="+pedidoComJuros.getValorLiquido());
+            return ResponseEntity.ok(pedidoComJuros);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
     @PostMapping("/cadastrar/composto")
