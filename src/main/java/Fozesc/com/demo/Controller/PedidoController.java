@@ -92,6 +92,7 @@ public class PedidoController {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         }
     }
+    /*
     @Transactional(rollbackFor = Exception.class)
     public Pedido calculoMensal(Pedido pedido) {
         Double valorInicial = pedido.getValorDoc(); // Obtém o valor inicial do pedido
@@ -106,6 +107,8 @@ public class PedidoController {
 
         return Repository.save(pedido); // Salva o pedido com os valores atualizados e retorna o pedido criado
     }
+
+     */
     @PostMapping("/cadastrar")
     public ResponseEntity<?> cadastrar(@RequestBody Pedido cadastro){
         try{

@@ -20,19 +20,29 @@ public class Pessoa extends AbstractEntity {
     private String nome;
     @Getter
     @Setter
-    @Column(name = "cpf/cnpj",nullable = false,length = 19)
-    private String cpfCnpj;
+    @Column(name = "juros",nullable = false)
+    private Double juros;
+    @Getter
+    @Setter
+    @Column(name = "cpf",nullable = false,length = 19)
+    private String cpf;
+    @Getter
+    @Setter
+    @Column(name = "rg",nullable = false,length = 19)
+    private String rg;
     @Getter
     @Setter
     @Column(name = "numero_Doc",nullable = false,length = 30)
     private String numeroDoc;
     @Getter
     @Setter
-    @Column(name = "banco",nullable = false,length = 20)
-    private Bancos banco;
+    @OneToOne
+    @JoinColumn(name = "banco",nullable = false)
+    private Banco banco;
     @Getter@Setter
-    @Column(name= "permissao", nullable = false)
-    private boolean permissao;
+    @OneToOne
+    @JoinColumn(name= "situacao", nullable = false)
+    private Situacao situacao;
 
     @Getter
     @Setter

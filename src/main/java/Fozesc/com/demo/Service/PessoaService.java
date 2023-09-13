@@ -21,7 +21,8 @@ public class PessoaService {
         Assert.notNull(cadastrar.getBanco(), "Error, campo banco vazio");
         Assert.notNull(cadastrar.getNumeroDoc(), "Error, campo numeroDoc vazio");
         String regexCpf = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$";
-        Assert.isTrue(cadastrar.getCpfCnpj().matches(regexCpf), "Error cpf com mascara errada");
+        Assert.isTrue(cadastrar.getCpf().matches(regexCpf), "Error cpf com mascara errada");
+        Assert.isTrue(cadastrar.getRg().matches(regexCpf), "Error rg com mascara errada");
 
         int count = this.Repository.countByNome(cadastrar.getNome());
         Assert.isTrue(count == 0, "Erro: A pessoa já existe");
