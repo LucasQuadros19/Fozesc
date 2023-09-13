@@ -23,7 +23,7 @@ public class PedidoService {
     @Transactional(rollbackFor = Exception.class)
     public Pedido cadastrar(Pedido cadastrar) {
         Assert.notNull(cadastrar.getQuantidade(), "Error, campo quantidade vazio");
-        Assert.notNull(cadastrar.getJuros(), "Error, campo juros vazio");
+
         return this.Repository.save(cadastrar);
     }
     @Transactional(rollbackFor = Exception.class)
@@ -36,10 +36,11 @@ public class PedidoService {
 
 
 
-
     // adicionar limite
     @Transactional(rollbackFor = Exception.class)
     public Pedido pedidoMensalSimples(Pedido pedido) {
+
+
         Double valorInicial = pedido.getValorDoc();
         Double jurosInt = pedido.getJuros();
         Integer quantidade = pedido.getQuantidade();
@@ -53,6 +54,7 @@ public class PedidoService {
     }
     @Transactional(rollbackFor = Exception.class)
     public Pedido pedidoMensalComposto(Pedido pedido) {
+
         Double valorInicial = pedido.getValorDoc();
         Double jurosInt = pedido.getJuros();
         Integer quantidade = pedido.getQuantidade();
@@ -70,9 +72,12 @@ public class PedidoService {
         pedido.setValorLiquido(parcela);
         pedido.setTotal(resultado);
         return Repository.save(pedido);
+
+
     }
     @Transactional(rollbackFor = Exception.class)
     public Pedido pedidodiarioSimples(Pedido pedido) {
+
         Double valorInicial = pedido.getValorDoc();
         Double jurosInt = pedido.getJuros();
         Integer quantidade = pedido.getQuantidade();
@@ -91,6 +96,8 @@ public class PedidoService {
         pedido.setTotal(total);
         pedido.setQuantidade((int) diferencaDias);
         return Repository.save(pedido);
+
     }
+
 
 }

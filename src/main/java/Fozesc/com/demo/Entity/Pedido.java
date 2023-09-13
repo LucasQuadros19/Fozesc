@@ -23,9 +23,9 @@ public class Pedido extends AbstractEntity{
     private Pessoa cliente;
     @Getter
     @Setter
+    @OneToOne
     @JoinColumn(name = "formaPaga",nullable = false)
-    private Forma formaPaga;
-
+    private FormaPagamento formaPaga;
     @Getter
     @Setter
     @Column(name = "valorDoc",nullable = false)
@@ -64,8 +64,9 @@ public class Pedido extends AbstractEntity{
     private LocalDateTime vencimento;
     @Getter
     @Setter
-    @Column(name = "situacao",nullable = false,length = 100)
-    private Situacaos situacao;
+    @OneToOne
+    @JoinColumn(name = "situacao",nullable = false)
+    private Situacao situacao;
     @Getter
     @Setter
     @Column(name = "observacao",length = 100)
