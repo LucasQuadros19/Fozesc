@@ -40,6 +40,20 @@ public class PedidoController {
         List<Pedido> listarAtivo = Repository.findByAtivo(ativo);
         return ResponseEntity.ok(listarAtivo);
     }
+    @PostMapping("/cadastrar/price")
+    public ResponseEntity<String> TabelaPrice(@RequestBody Pedido cadastro) {
+        try {
+            Pedido pedidoComJuros = Service.calcularTabelaPrice(cadastro);
+            return ResponseEntity.ok("Operação concluída com sucesso!");
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+    /*
     @GetMapping("/lista/cliente/{id}")
     public ResponseEntity<?> listacliente(@PathVariable(value = "id") Long id){
         List<Pedido> pedidosDoCliente = Repository.findByClienteId(id);
@@ -92,6 +106,8 @@ public class PedidoController {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         }
     }
+
+ */
     /*
     @Transactional(rollbackFor = Exception.class)
     public Pedido calculoMensal(Pedido pedido) {
