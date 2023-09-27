@@ -35,7 +35,7 @@ public class PedidoService {
     }
 
 
-
+/*
     // adicionar limite
     @Transactional(rollbackFor = Exception.class)
     public Pedido pedidoMensalSimples(Pedido pedido) {
@@ -75,6 +75,7 @@ public class PedidoService {
 
 
     }
+
     @Transactional(rollbackFor = Exception.class)
     public Pedido pedidodiarioSimples(Pedido pedido) {
 
@@ -98,6 +99,34 @@ public class PedidoService {
         return Repository.save(pedido);
 
     }
+
+ */
+
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public Pedido calcularTabelaPrice(Pedido pedido) {
+        Double PV = pedido.getValorDoc();
+        Double R = pedido.getJuros() / 100;
+        Integer N = pedido.getQuantidade();
+        Double P = (double) 0;
+        Double saldo = PV;
+        P = (PV * R * Math.pow((1 + R), N)) / (Math.pow((1 + R), N) - 1);
+        pedido.setTotal(P);
+        System.out.println("prestacao= "+P);
+        System.out.println("Parcela | Juros | Amortizacao | Prestacao | Saldo");
+
+        for (int i = 1; i <= N; i++) {
+            Double juros = saldo * R;
+            Double amortizacao = P - juros;
+            saldo -= amortizacao;
+            System.out.println(i + " | " + juros + " | " + amortizacao + " | " + P + " | " + saldo);
+        }
+
+        return Repository.save(pedido);
+    }
+
+
 
 
 }

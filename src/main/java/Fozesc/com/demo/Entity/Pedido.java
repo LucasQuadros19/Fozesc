@@ -15,17 +15,20 @@ import java.util.List;
 @AuditTable(value = "pedidoAudited", schema = "audited")
 @Table(name = "pedido",schema = "public")
 public class Pedido extends AbstractEntity{
-
+/*
     @Getter
     @Setter
     @ManyToOne
     @JoinColumn(name = "cliente",nullable = false)
     private Pessoa cliente;
+
     @Getter
     @Setter
     @OneToOne
     @JoinColumn(name = "formaPaga",nullable = false)
     private FormaPagamento formaPaga;
+
+ */
     @Getter
     @Setter
     @Column(name = "valorDoc",nullable = false)
@@ -36,8 +39,8 @@ public class Pedido extends AbstractEntity{
     private Double juros;
     @Getter
     @Setter
-    @Column(name = "valorLiquido")
-    private Double valorLiquido;
+    @Column(name = "valorS")
+    private Double ValorS;
     @Getter
     @Setter
     @Column(name = "quantidade",nullable = false)
@@ -46,6 +49,7 @@ public class Pedido extends AbstractEntity{
     @Setter
     @Column(name = "total")
     private Double total;
+    /*
     @Getter
     @Setter
     @Column(name = "emitente",nullable = false,length = 30)
@@ -86,4 +90,6 @@ public class Pedido extends AbstractEntity{
         this.setCriacao(LocalDateTime.now());
         this.aprovacao = true;
     }
+
+     */
 }

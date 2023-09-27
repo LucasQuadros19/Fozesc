@@ -43,10 +43,29 @@ public class Pessoa extends AbstractEntity {
     @OneToOne
     @JoinColumn(name= "situacao", nullable = false)
     private Situacao situacao;
-
     @Getter
     @Setter
     @Column(name= "limite",nullable = false)
     private Double limite;
+    @Getter
+    @Setter
+    @Column(name = "cep",nullable = false,length = 30)
+    private String cep;
+    @Getter
+    @Setter
+    @Column(name = "cidade",nullable = false,length = 30)
+    private String cidade;
+    @Getter
+    @Setter
+    @Column(name = "bairro",nullable = false,length = 30)
+    private String bairro;
+    @Getter
+    @Setter
+    @Column(name = "rua",nullable = false,length = 30)
+    private String rua;
+    @Getter
+    @Setter
+    @Column(name = "numero",nullable = false,length = 30)
+    private Integer numero;
 
 }
