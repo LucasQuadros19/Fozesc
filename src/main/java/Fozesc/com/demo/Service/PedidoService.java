@@ -24,6 +24,21 @@ public class PedidoService {
     public Pedido cadastrar(Pedido cadastrar) {
         Assert.notNull(cadastrar.getQuantidade(), "Error, campo quantidade vazio");
 
+        if(cadastrar.getCheques() != null){
+            for(int i=0; i<cadastrar.getCheques().size(); i++){
+                cadastrar.getCheques().get(i).setPedido(cadastrar);
+            }
+        }
+        if(cadastrar.getParcelas() != null){
+            for(int i=0; i<cadastrar.getParcelas().size(); i++){
+                cadastrar.getParcelas().get(i).setPedido(cadastrar);
+            }
+        }
+
+        //  for(int i=0;i<pedido.getParcelas().size();i++){
+       //     pedido.getParcelas().get(i).setPedido(pedido);}
+
+
         return this.Repository.save(cadastrar);
     }
     @Transactional(rollbackFor = Exception.class)

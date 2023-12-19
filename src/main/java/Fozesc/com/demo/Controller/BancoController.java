@@ -1,6 +1,7 @@
 package Fozesc.com.demo.Controller;
 
 import Fozesc.com.demo.Entity.Banco;
+import Fozesc.com.demo.Entity.Mensagem;
 import Fozesc.com.demo.Entity.Pessoa;
 import Fozesc.com.demo.Repository.BancoRepository;
 import Fozesc.com.demo.Repository.PessoaRepository;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/banco")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BancoController {
 
 
@@ -44,16 +46,24 @@ public class BancoController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody Banco cadastro){
+    public ResponseEntity<Mensagem> cadastrar(@RequestBody Banco cadastro){
         try{
             this.Service.cadastrar(cadastro);
-            return ResponseEntity.ok("Cadastro feito com sucesso");
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("Cadastro feito com sucesso");
+            return ResponseEntity.ok(mensagem);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO:"+e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO:"+e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }
     }
 

@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/pessoa")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PessoaController {
 
     @Autowired

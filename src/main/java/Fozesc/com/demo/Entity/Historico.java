@@ -25,4 +25,5 @@ public class Historico extends AbstractEntity{
     private LocalDateTime proxPgamaneto;
 
 
+
 }

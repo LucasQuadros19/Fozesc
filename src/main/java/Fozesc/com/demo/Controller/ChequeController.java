@@ -1,11 +1,11 @@
 package Fozesc.com.demo.Controller;
 
-import Fozesc.com.demo.Entity.Pessoa;
-import Fozesc.com.demo.Entity.Situacao;
-import Fozesc.com.demo.Repository.PessoaRepository;
-import Fozesc.com.demo.Repository.SituacaoRepository;
-import Fozesc.com.demo.Service.PessoaService;
-import Fozesc.com.demo.Service.SituacaoService;
+
+import Fozesc.com.demo.Entity.Cheques;
+import Fozesc.com.demo.Entity.Mensagem;
+
+import Fozesc.com.demo.Repository.ChequeRepository;
+import Fozesc.com.demo.Service.ChequeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -14,53 +14,60 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 @Controller
-@RequestMapping(value = "/api/situacao")
+@RequestMapping(value = "/api/cheque")
 @CrossOrigin(origins = "http://localhost:4200")
-public class SituacaoController {
+public class ChequeController {
 
 
     @Autowired
-    private SituacaoRepository Repository;
+    private ChequeRepository Repository;
     @Autowired
-    private SituacaoService Service;
+    private ChequeService Service;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Situacao>> lista(){
-        List<Situacao> listartudo = Service.listartudo();
+    public ResponseEntity<List<Cheques>> lista(){
+        List<Cheques> listartudo = Service.listartudo();
         return ResponseEntity.ok(listartudo);
     }
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id){
-        Situacao listarid = Repository.findById(id).orElse(null);
+        Cheques listarid = Repository.findById(id).orElse(null);
         return listarid == null
                 ? ResponseEntity.badRequest().body(" <<ERRO>>: valor nao encontrado.")
                 : ResponseEntity.ok(listarid);
     }
     @GetMapping("/lista/ativo/{ativo}")
-    public ResponseEntity<List<Situacao>> listaAtivo(@PathVariable boolean ativo) {
-        List<Situacao> listarAtivo = Repository.findByAtivo(ativo);
+    public ResponseEntity<List<Cheques>> listaAtivo(@PathVariable boolean ativo) {
+        List<Cheques> listarAtivo = Repository.findByAtivo(ativo);
         return ResponseEntity.ok(listarAtivo);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody Situacao cadastro){
+    public ResponseEntity<Mensagem> cadastrar(@RequestBody Cheques cadastro){
         try{
             this.Service.cadastrar(cadastro);
-            return ResponseEntity.ok("Cadastro feito com sucesso");
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("Cadastro feito com sucesso");
+            return ResponseEntity.ok(mensagem);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO:"+e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO:"+e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Situacao> deletarId = Repository.findById(id);
+        Optional<Cheques> deletarId = Repository.findById(id);
         if (deletarId.isPresent()) {
             Repository.deleteById(id);
             return ResponseEntity.ok("Apagado com sucesso");
@@ -69,7 +76,7 @@ public class SituacaoController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar( @PathVariable Long id, @RequestBody Situacao atualizarId) {
+    public ResponseEntity<?> atualizar( @PathVariable Long id, @RequestBody Cheques atualizarId) {
         try {
             this.Service.atualizar(id, atualizarId);
             return ResponseEntity.ok().body(" atualizado com sucesso!");

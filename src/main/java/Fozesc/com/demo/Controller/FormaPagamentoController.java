@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/FormaPagamento")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FormaPagamentoController {
 
 

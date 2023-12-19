@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/historico")
+@CrossOrigin(origins = "http://localhost:4200")
 public class HistoricoController {
 
     @Autowired

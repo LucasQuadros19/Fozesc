@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/pedido")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PedidoController {
     @Autowired
     private PedidoRepository Repository;
