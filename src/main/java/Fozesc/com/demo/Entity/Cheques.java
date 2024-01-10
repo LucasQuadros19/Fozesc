@@ -1,5 +1,6 @@
 package Fozesc.com.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,9 @@ public class Cheques extends AbstractEntity {
     private String codBanco;
     @Column(name = "agencia",nullable = false)
     private String agencia;
-    @DateTimeFormat(pattern = "dd/mm/yyyy")
+    @JsonFormat(pattern = "ddMMyyyy")
+    @DateTimeFormat(pattern = "ddMMyyyy")
     @Column(name = "vencimento")
     private LocalDate vencimento;
+
 }

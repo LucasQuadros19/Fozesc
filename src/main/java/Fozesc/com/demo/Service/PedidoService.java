@@ -126,25 +126,25 @@ public class PedidoService {
         Integer N = pedido.getQuantidade();
         Double P = (double) 0;
         Double saldo = PV;
+
+
+
         P = (PV * R * Math.pow((1 + R), N)) / (Math.pow((1 + R), N) - 1);
+
+
+
         pedido.setTotal(P);
         System.out.println("prestacao= " + P);
         System.out.println("Parcela | Juros | Amortizacao | Prestacao | Saldo");
-
         for (int i = 0; i < N; i++) {
             Double juros = saldo * R;
             Double amortizacao = P - juros;
             saldo -= amortizacao;
-
-
             if (Math.abs(saldo) < 1e-10) {
                 saldo = 0.0;
             }
-
             System.out.println((i + 1) + " | " + juros + " | " + amortizacao + " | " + P + " | " + saldo);
         }
-
-
         return Repository.save(pedido);
     }
 
