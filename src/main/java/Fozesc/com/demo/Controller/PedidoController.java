@@ -1,4 +1,5 @@
 package Fozesc.com.demo.Controller;
+import Fozesc.com.demo.Entity.Mensagem;
 import Fozesc.com.demo.Entity.Pedido;
 import Fozesc.com.demo.Repository.PedidoRepository;
 import Fozesc.com.demo.Service.PedidoService;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/pedido")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PedidoController {
     @Autowired
     private PedidoRepository Repository;
@@ -41,18 +43,27 @@ public class PedidoController {
         return ResponseEntity.ok(listarAtivo);
     }
     @PostMapping("/cadastrar/price")
-    public ResponseEntity<String> TabelaPrice(@RequestBody Pedido cadastro) {
-        try {
-            Pedido pedidoComJuros = Service.calcularTabelaPrice(cadastro);
-            return ResponseEntity.ok("Operação concluída com sucesso!");
+    public ResponseEntity<Mensagem> TabelaPrice(@RequestBody Pedido cadastro) {
+        try{
+            this.Service.cadastrar(cadastro);
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("Cadastro feito com sucesso");
+            return ResponseEntity.ok(mensagem);
         } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO:"+e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
+        }catch (IllegalArgumentException e) {
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }
     }
+
     /*
     @GetMapping("/lista/cliente/{id}")
     public ResponseEntity<?> listacliente(@PathVariable(value = "id") Long id){

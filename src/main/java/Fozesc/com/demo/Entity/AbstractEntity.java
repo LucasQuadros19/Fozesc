@@ -1,9 +1,10 @@
 package Fozesc.com.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 @MappedSuperclass
@@ -18,11 +19,12 @@ public abstract class AbstractEntity {
     @Column(name = "ativo",nullable = false)
     private  boolean ativo;
     @Getter@Setter
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
     @Column(name = "cadastro")
     private LocalDateTime cadastro;
     @Getter@Setter
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
     @Column(name = "edicao")
-
     private LocalDateTime edicao;
     @PrePersist
     private void prePersist(){

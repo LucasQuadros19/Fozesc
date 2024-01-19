@@ -24,6 +24,21 @@ public class PedidoService {
     public Pedido cadastrar(Pedido cadastrar) {
         Assert.notNull(cadastrar.getQuantidade(), "Error, campo quantidade vazio");
 
+        if(cadastrar.getCheques() != null){
+            for(int i=0; i<cadastrar.getCheques().size(); i++){
+                cadastrar.getCheques().get(i).setPedido(cadastrar);
+            }
+        }
+        if(cadastrar.getParcelas() != null){
+            for(int i=0; i<cadastrar.getParcelas().size(); i++){
+                cadastrar.getParcelas().get(i).setPedido(cadastrar);
+            }
+        }
+
+        //  for(int i=0;i<pedido.getParcelas().size();i++){
+       //     pedido.getParcelas().get(i).setPedido(pedido);}
+
+
         return this.Repository.save(cadastrar);
     }
     @Transactional(rollbackFor = Exception.class)
@@ -111,25 +126,25 @@ public class PedidoService {
         Integer N = pedido.getQuantidade();
         Double P = (double) 0;
         Double saldo = PV;
+
+
+
         P = (PV * R * Math.pow((1 + R), N)) / (Math.pow((1 + R), N) - 1);
+
+
+
         pedido.setTotal(P);
         System.out.println("prestacao= " + P);
         System.out.println("Parcela | Juros | Amortizacao | Prestacao | Saldo");
-
         for (int i = 0; i < N; i++) {
             Double juros = saldo * R;
             Double amortizacao = P - juros;
             saldo -= amortizacao;
-
-
             if (Math.abs(saldo) < 1e-10) {
                 saldo = 0.0;
             }
-
             System.out.println((i + 1) + " | " + juros + " | " + amortizacao + " | " + P + " | " + saldo);
         }
-
-
         return Repository.save(pedido);
     }
 

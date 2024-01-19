@@ -1,13 +1,11 @@
 package Fozesc.com.demo.Controller;
 
+
+import Fozesc.com.demo.Entity.Cheques;
 import Fozesc.com.demo.Entity.Mensagem;
-import Fozesc.com.demo.Entity.Pedido;
-import Fozesc.com.demo.Entity.Pessoa;
-import Fozesc.com.demo.Repository.PedidoRepository;
-import Fozesc.com.demo.Repository.PessoaRepository;
-import Fozesc.com.demo.Service.PedidoService;
-import Fozesc.com.demo.Service.PessoaService;
-import lombok.Getter;
+
+import Fozesc.com.demo.Repository.ChequeRepository;
+import Fozesc.com.demo.Service.ChequeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -16,37 +14,37 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 @Controller
-@RequestMapping(value = "/api/pessoa")
+@RequestMapping(value = "/api/cheque")
 @CrossOrigin(origins = "http://localhost:4200")
-public class PessoaController {
+public class ChequeController {
+
 
     @Autowired
-    private PessoaRepository Repository;
+    private ChequeRepository Repository;
     @Autowired
-    private PessoaService Service;
+    private ChequeService Service;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Pessoa>> lista(){
-        List<Pessoa> listartudo = Service.listartudo();
+    public ResponseEntity<List<Cheques>> lista(){
+        List<Cheques> listartudo = Service.listartudo();
         return ResponseEntity.ok(listartudo);
     }
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id){
-        Pessoa listarid = Repository.findById(id).orElse(null);
+        Cheques listarid = Repository.findById(id).orElse(null);
         return listarid == null
                 ? ResponseEntity.badRequest().body(" <<ERRO>>: valor nao encontrado.")
                 : ResponseEntity.ok(listarid);
     }
     @GetMapping("/lista/ativo/{ativo}")
-    public ResponseEntity<List<Pessoa>> listaAtivo(@PathVariable boolean ativo) {
-        List<Pessoa> listarAtivo = Repository.findByAtivo(ativo);
+    public ResponseEntity<List<Cheques>> listaAtivo(@PathVariable boolean ativo) {
+        List<Cheques> listarAtivo = Repository.findByAtivo(ativo);
         return ResponseEntity.ok(listarAtivo);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Mensagem> cadastrar(@RequestBody Pessoa cadastro){
+    public ResponseEntity<Mensagem> cadastrar(@RequestBody Cheques cadastro){
         try{
             this.Service.cadastrar(cadastro);
             Mensagem mensagem = new Mensagem();
@@ -67,10 +65,9 @@ public class PessoaController {
         }
     }
 
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Pessoa> deletarId = Repository.findById(id);
+        Optional<Cheques> deletarId = Repository.findById(id);
         if (deletarId.isPresent()) {
             Repository.deleteById(id);
             return ResponseEntity.ok("Apagado com sucesso");
@@ -79,7 +76,7 @@ public class PessoaController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar( @PathVariable Long id, @RequestBody Pessoa atualizarId) {
+    public ResponseEntity<?> atualizar( @PathVariable Long id, @RequestBody Cheques atualizarId) {
         try {
             this.Service.atualizar(id, atualizarId);
             return ResponseEntity.ok().body(" atualizado com sucesso!");
@@ -87,6 +84,5 @@ public class PessoaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 
 }
