@@ -1,5 +1,6 @@
 package Fozesc.com.demo.Controller;
 
+import Fozesc.com.demo.Entity.Mensagem;
 import Fozesc.com.demo.Entity.Pedido;
 import Fozesc.com.demo.Entity.Pessoa;
 import Fozesc.com.demo.Repository.PedidoRepository;
@@ -45,18 +46,27 @@ public class PessoaController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody Pessoa cadastro){
+    public ResponseEntity<Mensagem> cadastrar(@RequestBody Pessoa cadastro){
         try{
             this.Service.cadastrar(cadastro);
-            return ResponseEntity.ok("Cadastro feito com sucesso");
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("Cadastro feito com sucesso");
+            return ResponseEntity.ok(mensagem);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO:"+e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO:"+e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){

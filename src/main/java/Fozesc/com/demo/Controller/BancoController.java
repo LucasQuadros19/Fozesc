@@ -67,6 +67,7 @@ public class BancoController {
         }
     }
 
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         Optional<Banco> deletarId = Repository.findById(id);
