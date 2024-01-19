@@ -24,10 +24,10 @@ public class Cheques extends AbstractEntity {
 
     @Column(name = "numero",nullable = false)
     private String numero;
-    @Column(name = "codBanco",nullable = false)
-    private String codBanco;
-    @Column(name = "agencia",nullable = false)
-    private String agencia;
+    @Column(name = "valor",nullable = false)
+    private Double valor;
+    @Column(name = "valorJuros",nullable = false)
+    private Double valorJuros;
     @JsonFormat(pattern = "ddMMyyyy")
     @DateTimeFormat(pattern = "ddMMyyyy")
     @Column(name = "vencimento")
