@@ -137,16 +137,24 @@ public class PedidoController {
 
      */
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody Pedido cadastro){
+    public ResponseEntity<Mensagem> cadastrar(@RequestBody Pedido cadastro){
         try{
             this.Service.cadastrar(cadastro);
-            return ResponseEntity.ok("Cadastro feito com sucesso");
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("Cadastro feito com sucesso");
+            return ResponseEntity.ok(mensagem);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO:"+e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO:"+e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem("ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Mensagem mensagem = new Mensagem();
+            mensagem.setMensagem(e.getMessage());
+            return ResponseEntity.badRequest().body(mensagem);
         }
     }
 
